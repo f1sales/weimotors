@@ -21,7 +21,7 @@ module Weimotors
     def parse
       parsed_email = (remove_html_tags(@email.raw_html)).colons_to_hash(/(Responder para|Assunto|Telefone|Corpo da mensagem).*?:/, false)
 
-      email = @email.raw_html[/para:(.*?)br/][ /(?<=<).*(?=>)/]
+      email = @email.raw_html[/(?<=para:).*(?=<br \/>)/][/(?<=<).*(?=>)/]
 
       name = parsed_email['responder_para']
       message = parsed_email['corpo_da_mensagem'].split("\n").first
