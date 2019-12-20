@@ -19,25 +19,25 @@ module Weimotors
   end
   class F1SalesCustom::Email::Parser
     def parse
-      parsed_email = ("\n" + remove_html_tags(@email.raw_html)).colons_to_hash(/(Responder para|Assunto|Telefone|Corpo da mensagem).*?:/, false)
+      # parsed_email = ("\n" + remove_html_tags(@email.raw_html)).colons_to_hash(/(Responder para|Assunto|Telefone|Corpo da mensagem).*?:/, false)
 
       email = "teste@gmail.com"  #@email.raw_html[/para:(.*?)br/][/<(.*?)>/].gsub('>', '').gsub('<', '') 
 
-      name = parsed_email['responder_para']
-      message = parsed_email['corpo_da_mensagem'].split("\n").first
+      # name = parsed_email['responder_para']
+      # message = parsed_email['corpo_da_mensagem'].split("\n").first
 
       {
         source: {
           name: F1SalesCustom::Email::Source.all[0][:name],
         },
         customer: {
-          name: name,
+          name: "teste",
           phone: '',
           email: email,
         },
         product: '',
-        message: message,
-        description: parsed_email['assunto']
+        message: "teste",
+        description: "teste" # parsed_email['assunto']
       }
     end
 
