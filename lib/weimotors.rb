@@ -19,10 +19,12 @@ module Weimotors
   end
   class F1SalesCustom::Email::Parser
     def parse
-      parsed_email = @email.body.colons_to_hash(/(Responder para|Assunto|Telefone|Corpo da mensagem).*?:/, false)
+      parsed_email = ("\n" + remove_html_tags(@email.raw_html)).colons_to_hash(/(Responder para|Assunto|Telefone|Corpo da mensagem).*?:/, false)
 
-      name, email = parsed_email['responder_para'].split(' ')
-      message = parsed_email['corpo_da_mensagem'].split(' ').first
+      email = @email.raw_html[/para:(.*?)br/][/<(.*?)>/].gsub('>', '').gsub('<', '') 
+
+      name = parsed_email['responder_para']
+      message = parsed_email['corpo_da_mensagem'].split("\n").first
 
       {
         source: {
@@ -31,11 +33,19 @@ module Weimotors
         customer: {
           name: name,
           phone: '',
-          email: email.gsub('<','').gsub('>',''),
+          email: email,
         },
         product: '',
-        message: message
+        message: message,
+        description: parsed_email['assunto']
       }
+    end
+
+    private
+
+    def remove_html_tags(text)
+      re = /<("[^"]*"|'[^']*'|[^'">])*>/
+      text.gsub(re, '')
     end
   end
 end
