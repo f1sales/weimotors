@@ -8,7 +8,7 @@ RSpec.describe F1SalesCustom::Email::Parser do
       email = OpenStruct.new
       email.to = [email: 'website@lojateste.f1sales.org'],
       email.subject = 'Foo',
-      email.raw_html = "<!doctype html>\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"pt-BR\">\r\n<head>\r\n<title>Formulario de contato enviado por Chery Wei Motors Lapa</title>\r\n</head>\r\n<body>\r\n<p>Responder para: Marcio <marcioklepacz@gmail.com><br />\r\nAssunto: Quero saber sobre o novo Tiggo</p>\r\n<p>Corpo da mensagem:<br />\r\nQuero trocar o meu i30</p>\r\n<p>--<br />\r\nFormulario de contato enviado por Chery Wei Motors (http://weimotors.com.br)</p>\r\n</body>\r\n</html>\r\n\r\n\r\n"
+      email.raw_html = "<!doctype html>\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\" dir=\"ltr\" lang=\"pt-BR\">\r\n<head>\r\n<title>Formulario de contato enviado por Chery Wei Motors Lapa</title>\r\n</head>\r\n<body>\r\n<p>Responder para: Marcio Klepacz <marcioklepacz@gmail.com><br />\r\nAssunto: Quero saber sobre o novo Tiggo</p>\r\n<p>Corpo da mensagem:<br />\r\nQuero trocar o meu i30</p>\r\n<p>--<br />\r\nFormulario de contato enviado por Chery Wei Motors (http://weimotors.com.br)</p>\r\n</body>\r\n</html>\r\n\r\n\r\n"
 
       email
     }
@@ -20,7 +20,7 @@ RSpec.describe F1SalesCustom::Email::Parser do
     end
 
     it 'contains name' do
-      expect(parsed_email[:customer][:name]).to eq('Marcio')
+      expect(parsed_email[:customer][:name]).to eq('Marcio Klepacz')
     end
 
     it 'contains email' do
